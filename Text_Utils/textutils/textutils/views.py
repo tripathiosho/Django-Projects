@@ -4,7 +4,6 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'index.html')
-
     # return HttpResponse("Home")
 
 def analyze(request):
@@ -26,20 +25,23 @@ def analyze(request):
             if char not in punctuations:
                 analyzed = analyzed + char
         params = {'purpose':'Removed Punctuations', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
+        djtext = analyzed
+        #return render(request, 'analyze.html', params)
     if fullcaps =='on':
         analyzed = ""
         for char in djtext:
             analyzed += char.upper()
         params = {'purpose':'Upper Case', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
+        djtext = analyzed
+        #return render(request, 'analyze.html', params)
     if newlineremover == 'on' :
         analyzed = ""
         for char in djtext:
-            if char != "\n":
+            if char != "\n" and char!= "\r":
                 analyzed += char
         params = {'purpose':'Remove New Line', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
+        djtext = analyzed
+        #return render(request, 'analyze.html', params)
 
     if extraspaceremover == 'on':
         analyzed = ""
@@ -50,12 +52,14 @@ def analyze(request):
                     continue  
             analyzed += djtext[index]  
         params = {'purpose': 'Remove Extra Space', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
+        djtext = analyzed
+        #return render(request, 'analyze.html', params)
     
     if charcounter == 'on':
-        analyzed = " Total Chacarter in your input are: ->  "+str(len(djtext))
-        params = {'purpose': 'Remove Extra Space', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
+        count = " Total Chacarter in your input are: ->  "+str(len(djtext))
+        params = {'purpose': 'Remove Extra Space', 'analyzed_text': analyzed+count}
 
-    else:
-        return HttpResponse("Error")
+    if (removepunc != "on" and fullcaps !='on' and newlineremover != 'on' and extraspaceremover != 'on' and charcounter!= 'on'):
+        return HttpResponse(djtext+"\n \n Please be advised, no option was selected")
+    
+    return render(request, 'analyze.html', params)
