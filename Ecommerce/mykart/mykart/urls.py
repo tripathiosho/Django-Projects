@@ -22,8 +22,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('shop/', include('eshop.urls')),
-    path('blog/', include('eread.urls')),
+    path('eshop/', include('eshop.urls')),
+    path('eblog/', include('eread.urls')),
     path('',views.index),
 ]
 

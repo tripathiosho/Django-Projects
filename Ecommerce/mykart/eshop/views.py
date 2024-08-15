@@ -48,6 +48,7 @@ def productView(request, myid):
     return render(request, 'eshop/prodView.html', {'product':product[0]})
 
 def checkout(request):
+    print(request)
     if request.method=="POST":
         items_json = request.POST.get('itemsJson', '')
         name = request.POST.get('name', '')
