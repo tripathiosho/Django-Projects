@@ -4,7 +4,7 @@
 {% block body %}
 <div class="container my-3">
     <h3>Contact Us</h3>
-    <form action="/shop/contact/" method="post">{% csrf_token %}
+    <form action="/eshop/contact/" method="post">{% csrf_token %}
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" name='name' placeholder="Enter Your Name">
@@ -27,7 +27,12 @@
         <button type="submit" class="btn btn-success">Submit</button>
 </form>
 
-
-
-</div>
+{%block js%}
+<script>
+{% if thank %}
+alert('Thanks for contacting us. We wil get back to you soon!');
+document.location = "/eshop/contact";
+{%endif%}
+</script>
+{%endblock%}
 {% endblock %}
